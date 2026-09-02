@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Principal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 class="Titulo" id="bemVindo">Bem-vindo</h1>
+        <div class="botoes">
+            <button onclick="abrirModal()">Cadastrar</button>
+            <button onclick="sair()">Sair</button>
+        </div>
+    </header>
+    <main>
+        <div class="busca">
+            <input type="text" placeholder="Digite aqui o produto que procura" id="busca" oninput="filtrarProdutos()">
+        </div>
+        <div id="listaProdutos"></div>
+        <div class="modal">
+            <h2>Cadastrar Produto</h2>
+            <input id="nome" placeholder="Nome do Produto">
+            <input id="descricao" placeholder="Descrição do Produto">
+            <input type="number" id="estoque" placeholder="Digite a quantidade em estoque">
+            <button onclick="cadastrar()" class="cadastrar"> Cadastrar </button>
+            <button onclick="fecharModal()" class="cadastrar"> Fechar </button>
+        </div>
+        <div class="modal" id="modalAtualizar">
+            <h2>Atualizar Produto</h2>
+            <input type="hidden" id="idAtualizar">
+            <input id="nomeAtualizar" placeholder="Nome do Produto">
+            <input id="descricaoAtualizar" placeholder="Descrição do Produto">
+            <input type="number" id="estoqueAtualizar" placeholder="Quantidade em estoque">
+            <button onclick="salvarAtualizacao()" class="cadastrar"> Atualizar </button>
+            <button onclick="fecharModalAtualizar()" class="cadastrar"> Fechar</button>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
