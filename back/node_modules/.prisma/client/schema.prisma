@@ -11,8 +11,6 @@ model Usuario {
   nome  String
   email String @unique
   senha String
-
-  movimentacoes Movimentacao[]
 }
 
 model Produto {
@@ -25,12 +23,17 @@ model Produto {
 }
 
 model Movimentacao {
-  id          Int      @id @default(autoincrement())
-  produtoId   Int
-  usuairoId   Int
-  data_comeco DateTime @default(now())
-  data_final  DateTime
+  id         Int      @id @default(autoincrement())
+  produtoId  Int
+  quantidade Int
+  date       DateTime
+
+  status Status @default(PEDIDO)
 
   produto Produto @relation(fields: [produtoId], references: [id])
-  usuario Usuario @relation(fields: [usuairoId], references: [id])
+}
+
+enum Status {
+  PEDIDO
+  PRODUZIDO
 }

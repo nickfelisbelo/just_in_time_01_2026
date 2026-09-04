@@ -1,57 +1,50 @@
-const prisma = require("../data/prisma");
+const movimentacaoService =
+    require("../services/movimentacao.services");
+
 
 const cadastrar = async (req, res) => {
-    const data = req.body;
 
-    const item = await prisma.movimentacao.create({
-        data
-    });
+    try {
 
-    res.json(item).status(201).end();
+        const data = req.body;
+
+        const movimentacao =
+            await movimentacaoService.cadastrar(data);
+
+        res.status(201).json(movimentacao);
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        res.status(400).json({
+            mensagem: erro.message
+        });
+    }
 };
+
 
 const listar = async (req, res) => {
-    const lista = await prisma.movimentacao.findMany();
 
-    res.json(lista).status(200).end();
+    try {
+
+        const movimentacoes =
+            await movimentacaoService.listar();
+
+        res.status(200).json(movimentacoes);
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        res.status(500).json({
+            mensagem: "Erro ao listar movimentações."
+        });
+    }
 };
 
-const buscar = async (req, res) => {
-    const { id } = req.params;
-    
-    const item = await prisma.movimentacao.findUnique({
-        where: { id : Number(id) }
-    });
-
-    res.json(item).status(200).end();
-};
-
-const atualizar = async (req, res) => {
-    const { id } = req.params;
-    const dados = req.body;
-    
-    const item = await prisma.movimentacao.update({
-        where: { id : Number(id) },
-        data: dados
-    });
-
-    res.json(item).status(200).end();
-};
-
-const excluir = async (req, res) => {
-    const { id } = req.params;
-    
-    const item = await prisma.movimentacao.delete({
-        where: { id : Number(id) }
-    });
-
-    res.json(item).status(200).end();
-};
 
 module.exports = {
     cadastrar,
-    listar,
-    buscar,
-    atualizar,
-    excluir
-}
+    listar
+};

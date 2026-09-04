@@ -23,4 +23,4 @@
     - [RF04.4] Alerta de estoque
 
 ## DER(Diagraa de Relacionamento de Entidades)
-![DER](./assets/provaRevisao.drawio.png)
+![DER](./assets/DER.png)
