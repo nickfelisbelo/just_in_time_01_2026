@@ -13,9 +13,11 @@ function fecharModalAtualizar() {
 }
 
 function sair() {
-    localStorage.removeItem("usuarioId");
-    localStorage.removeItem("usuarioNome");
     window.location.href = "../index.html";
+}
+
+function movimentacao() {
+    window.location.href = "../Producao/index.html";
 }
 
 async function cadastrar() {
@@ -119,12 +121,7 @@ async function listarProdutos() {
 }
 
 function filtrarProdutos() {
-    const filtro = document
-        .getElementById("busca")
-        .value
-        .trim()
-        .toUpperCase();
-
+    const filtro = document.getElementById("busca").value.trim().toUpperCase();
     const linhas = document.querySelectorAll("#listaProdutos tbody tr");
 
     linhas.forEach(linha => {
@@ -220,17 +217,26 @@ async function excluirProdutos(id) {
             method: "DELETE"
         });
 
-        const dados = await resposta.json();
+        let dados;
 
+        try {
+            dados = await resposta.json();
+        } catch {
+            dados = {};
+        }
         if (!resposta.ok) {
-            alert(dados.mensagem || "Erro ao excluir produto.");
+            if (resposta.status === 500) {
+                alert("Verifique se o produto está em uma movimentação.");
+            } else {
+                alert(
+                    dados.mensagem ||
+                    "Erro ao excluir produto."
+                );
+            }
             return;
         }
-
         alert("Produto excluído com sucesso!");
-
         listarProdutos();
-
     } catch (erro) {
         console.error(erro);
         alert("Erro ao conectar com o servidor.");
